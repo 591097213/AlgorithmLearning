@@ -1,0 +1,69 @@
+//用1,2,3……,9组成3个三位数abc,def和ghi,每个数字恰好使用一次,要求abc:def:ghi=1:2:3.输出所有解。
+/*　其实这道题就2个地方要注意， 也是解题关键
+
+abc:def:ghi=1:2:3
+1,2,3……,9组成3个三位数abc,def和ghi,每个数字恰好使用一次
+
+
+对于第一个地方， 我们可以用1个循环， 加3个变量来实现
+就是
+1
+2
+3
+4
+5
+for(i = 123; i <= 329; i++)
+{
+    j = i * 2;    //i的2倍
+    k = i * 3;    //i的3倍
+}
+i 最小只能是123, 最大只能是329(因为最大数字只能是987)
+
+第2个地方的实现， 我们可以用数学的方法来实现
+1~9加起来真能是45， 1~9乘起来只能是362880
+
+所以我们可以将前面的i, j, k分别分解出来的9位数字相加， 相乘， 
+看最后的结果是不是45，362880*/
+
+
+
+
+#include<stdio.h>
+ 
+void result(int num, int &result_add, int &result_mul)
+{
+    int i, j, k;
+ 
+    i = num / 100;        //百位
+    j = num / 10 % 10;    //十位
+    k = num % 10;         //个位
+ 
+    result_add += i + j + k;    //分解出来的位数相加
+    result_mul *= i * j * k;    //相乘
+}
+ 
+ 
+int main()
+{
+    int i, j, k;
+    int result_add, result_mul;
+ 
+    for(i = 123; i <=329; i++)
+    {
+        j = i * 2;
+        k = i * 3;
+ 
+        result_add = 0;
+        result_mul = 1;
+ 
+ 
+ 
+        result(i, result_add, result_mul);
+        result(j, result_add, result_mul);
+        result(k, result_add, result_mul);
+ 
+        if(result_add == 45 && result_mul == 362880)
+            printf("%d %d %d\n", i, j, k);
+    }
+    return 0;
+}

@@ -1,0 +1,86 @@
+//给定一个阿拉伯数字串，按照中文读写的规范转为汉语拼音字串，相邻的两个音节用一个空格符格开。
+//注意必须严格按照规范，比如说“10010”读作“yi wan ling yi shi”而不是“yi wan ling shi”，“100000”读作“shi wan”而不是“yi shi wan”，“2000”读作“er qian”而不是“liang qian”。
+//数字不超过10位
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class Main
+{	
+	
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(new BufferedInputStream(System.in));
+		PrintWriter out=new PrintWriter(new BufferedOutputStream(System.out));
+		String[] a={"ling","yi","er","san","si","wu","liu","qi","ba","jiu"};//将某单个数字转化为拼音，输出结果首位为数字，故不能前带空格
+		String[] b={""," shi"," bai"," qian"," wan"," shi"," bai"," qian"," yi"," shi"};//储存权值，输出时顺便输出空格
+		
+		String s=sc.next();
+		s=new StringBuilder(s).reverse().toString();//倒置
+		char[] c=s.toCharArray();//存入字符数组，下标越低权值越小
+		int n=c.length;//长度
+		
+		//OOOO|OOOO|OO
+		//0123 4567 89
+		//▲▲   ▲▲   ▲▲
+		for(int i=n-1;i>=0;i--)//从高位开始处理
+		{
+			int k=c[i]-48;//转数字
+			
+			if(k==0)//为0时
+			{
+				if(i==8)//当k==0&&i==8时，c[9]肯定不为0
+				{
+					out.print(" yi");//即使c[8]==0也要输出权值
+				}
+				else if(i==4)//考虑位置为4时
+				{
+					int sum=0;
+					for(int j=5;j<8&&j<n;j++)//c[5]~c[7]的和
+					{
+						sum+=(c[j]-'0');
+					}
+					if(sum!=0)//c[5]~c[7]不都为零，即使c[4]==0也要输出权值
+					{
+						out.print(" wan");
+					}
+				}
+				else if(i!=0&&c[i-1]!='0')//连续零只输出最低位的零，最低位如果为c[0],则不输出
+				{
+					out.print(" ling");
+				}
+			}
+			
+			else if((k==1)&&(i==9&&n==10||i==5&&n==6||i==1&&n==2))//当k==1且为首位，考虑“十亿、十万、十”不输出前置“一”的情况，
+			{
+				out.print("shi");
+			}
+			
+			else
+			{
+				if(i==n-1)//首位，控制空格
+				{
+					out.print(a[k]+b[i]);
+				}
+				else//输出数字+权值
+				{
+					out.print(" "+a[k]+b[i]);
+				}
+				
+			}
+			
+		}
+		
+		out.flush();
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+}

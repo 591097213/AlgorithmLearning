@@ -1,0 +1,77 @@
+//问题描述
+//　　FJ在沙盘上写了这样一些字符串：
+//　　A1 = “A”
+//　　A2 = “ABA”
+//　　A3 = “ABACABA”
+//　　A4 = “ABACABADABACABA”
+//　　… …
+//　　你能找出其中的规律并写所有的数列AN吗？
+//输入格式
+//　　仅有一个数：N ≤ 26。
+//输出格式
+//　　请输出相应的字符串AN，以一个换行符结束。输出中不得含有多余的空格或换行、回车符。
+//样例输入
+//3
+//样例输出
+//ABACABA
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class Main
+{
+	static public StringBuilder digui(int n)
+	{//错误示范
+		if(n==1)
+		{
+			return new StringBuilder("A");
+		}
+		else
+		{
+			StringBuilder s1=digui(n-1);
+			StringBuilder s2=digui(n-1);
+			s1.append((char)('A'+n-1));
+			s1.append(s2);
+			return s1;
+		}
+	}
+	
+	//正确的提高效率的方法,在递归中直接输出
+	/*static public void digui(int n)
+	{
+		if(n==1)
+			out.print("A");
+		else
+		{
+			digui(n-1);
+			out.print((char)('A'+n-1));
+			digui(n-1);
+		}
+	}*/
+	
+	
+	
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(new BufferedInputStream(System.in));
+		PrintWriter out=new PrintWriter(new BufferedOutputStream(System.out));
+		while(sc.hasNext())
+		{
+			int n=sc.nextInt();
+			out.print(digui(n));
+			out.flush();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+}

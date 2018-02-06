@@ -1,0 +1,41 @@
+/*
+集合运算，输入m及m个集合元素（集合A），n及n个集合元素（集合B），
+输出排序后的A&B，A|B，A&~B（余集），集合中的元素为不大于31的费非负整数。
+
+该例子中的方法还可用于排序集合，集合中的元素要求为不大于31或63的非负整数
+*/
+#include"iostream"
+using namespace std;
+
+int main()
+{
+	int n,m,x,A=0,B=0,jiao=0,maxx=-1;//用A，B代表集合存储数字，maxx代表两个集合中的最大值
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>x;
+		maxx=max(maxx,x);
+		A+=(1<<x);//存入A
+	}
+	cin>>m;
+	for(int i=0;i<m;i++)
+	{
+		cin>>x;
+		maxx=max(maxx,x);
+		B+=(1<<x);//存入B
+	}
+	int rst=A&B;
+	for(int i=0;i<=maxx;i++)
+	   if(rst&(1<<i))
+	      cout<<i<<" ";//输出
+	cout<<endl;
+	rst=A|B;
+	for(int i=0;i<=maxx;i++)
+	   if(rst&(1<<i))
+	      cout<<i<<" ";
+	      cout<<endl;
+    for(int i=0;i<=maxx;i++)
+        if(!(B&(1<<i))&&A&(1<<i))
+            cout<<i<<" ";
+	return 0;
+}

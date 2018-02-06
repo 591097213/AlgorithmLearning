@@ -1,0 +1,53 @@
+// 【方格路径问题】  
+// 在一个N*N的方格中，从起点(0,0)到达终点(n,n)共有多少条路径？  
+// 每一步只能向右或向下行进一个单位的距离。  
+// 如下图所示的这个9*9的方格中，共有多少条可行的路径？  
+// 思路：到达任意一点的路径数等于到达其左侧点和上方点之和，递归求解
+//		  
+//		             (0,0) 0  1  2  3  4  5  6  7  8  
+//		                0  +  +  +  +  +  +  +  +  +   
+//		                1  +  +  +  +  +  +  +  +  +   
+//		                2  +  +  +  +  +  +  +  +  +   
+//		                3  +  +  +  +  +  +  +  +  +   
+//		                4  +  +  +  +  +  +  +  +  +   
+//		                5  +  +  +  +  +  +  +  +  +   
+//		                6  +  +  +  +  +  +  +  +  +   
+//		                7  +  +  +  +  +  +  +  +  +   
+//		                8  +  +  +  +  +  +  +  +  + (8,8)  
+class Main
+{
+	static int result(int row,int col)
+	{
+		if(row<0||col<0)
+		{
+			return 0;
+		}
+		if(row==0||col==0)
+		{
+			return 1;
+		}
+		return result(row-1,col)+result(row,col-1);
+	}
+	
+	public static void main(String[] args)
+	{
+		  Scanner sc=new Scanner(System.in);
+		  while(sc.hasNext())
+		  {
+			  int n=sc.nextInt()-1;
+			  System.out.println(result(n,n));
+		  }
+		  
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

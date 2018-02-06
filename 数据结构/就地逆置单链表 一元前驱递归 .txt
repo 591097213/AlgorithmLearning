@@ -1,0 +1,17 @@
+// 反转链表(一元前驱递归式)  
+ListNode * ReverseList(ListNode * head)  
+{  
+    if (!head || !head->m_next) //递归终结情形  
+    {     
+        return head;  
+    }  
+      
+    //直接利用子递归反转子链表  
+    ListNode * newHead = ReverseList(head->m_next); //前驱式递归  
+  
+    //附加操作  
+    head->m_next->m_next = head; //这条语句要理解左值与右值的概念  
+    head->m_next = NULL;  
+  
+    return newHead;  
+}  

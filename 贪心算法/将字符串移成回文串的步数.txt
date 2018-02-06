@@ -1,0 +1,72 @@
+//问题描述
+//　　回文串，是一种特殊的字符串，它从左往右读和从右往左读是一样的。小龙龙认为回文串才是完美的。现在给你一个串，它不一定是回文的，请你计算最少的交换次数使得该串变成一个完美的回文串。
+//　　交换的定义是：交换两个相邻的字符
+//　　例如mamad
+//　　第一次交换 ad : mamda
+//　　第二次交换 md : madma
+//　　第三次交换 ma : madam (回文！完美！)
+//输入格式
+//　　第一行是一个整数N，表示接下来的字符串的长度(N <= 8000)
+//　　第二行是一个字符串，长度为N.只包含小写字母
+//输出格式
+//　　如果可能，输出最少的交换次数。
+//　　否则输出Impossible
+//样例输入
+//5
+//mamad
+//样例输出
+//3
+
+//tip：贪心法，从左边起依次扫描，每记录一个字母，就寻找从右边起最近的与它相同的字母，移动到回文的位置，记录步数，如果最近的与它相同的字母是它本身，说明它在字串里单独存在，可以根据单独存在的字母的个数以及字串的长度来判断impossible的情况，如果排除impossible的情况，则记录它到字串中间的步数，并不需要移动它。
+
+import java.io.BufferedInputStream;
+import java.util.Scanner;
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(new BufferedInputStream(System.in));
+		int n=sc.nextInt();
+		String s=sc.next();
+		char[] c=s.toCharArray();
+		
+		int k=n-1;//界定已形成回文串的字符，k右侧的字符与对称的左侧字符已经形成回文
+		int total=0;//储存单字符个数
+		int temp=0;//储存单字符的移动步数
+		int result=0;//储存成对字符的移动步数
+		
+		for(int i=0;i<=k;i++)//从左向右扫描，j右侧的即是已排列成回文形式的字符
+		{
+			for(int j=k;j>=i;j--)//从j开始右向左扫描
+			{
+				if(j==i)//在i~j的范围内一直没有找到相等字符，k一直--，直到k==i
+				{
+					total++;
+					if(n%2==0||total>1)//偶数个字符中有一个单字，或者字符串中单字符个数大于1
+					{
+						System.out.print("Impossible");
+						System.exit(0);
+					}
+					temp=(n-1-2*(n-1-k))/2;//记录下该单字符移动到中心所需的步数，然后并不移动，随着i改变k不变，字符串的中心将发生改变
+				}
+				else if(c[i]==c[j])//遇到右侧第一个相等字符，这个if-else结构不能颠倒，不能先判断c[i]==c[j]再判断j==i。
+				{
+					result+=k-j;//记录下移动所需的最小次数
+					for(int z=j;z<k;z++)//将连续交换作循环位移处理
+					{
+						c[z]=c[z+1];
+					}
+					c[k]=c[i];
+					k--;
+					break;//必须有break；否则此时j未满足跳出循环的条件，将继续扫描
+				}
+				
+			}
+		}
+		
+		System.out.print(result+temp);
+		
+	}
+
+}

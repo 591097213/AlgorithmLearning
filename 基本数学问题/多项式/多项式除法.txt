@@ -1,0 +1,68 @@
+//多项式除法
+import java.util.Scanner;
+
+public class A {
+
+	public static void main(String[] args) {
+
+		
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNext())
+		{
+			int a=sc.nextInt();//输入a，b为被除多项式、除多项式项数
+			int b=sc.nextInt();
+			int[] A=new int[a];
+			int[] B=new int[b];
+			for(int i=0;i<a;i++)
+			{
+				A[i]=sc.nextInt();
+			}
+			for(int i=0;i<b;i++)
+			{
+				B[i]=sc.nextInt();
+			}
+			int r=a-b+1;
+			int l=b-1;
+			int[] R=new int[r];//R[]为商多项式系数数组
+			int[] L=new int[l];//L[]为余多项式数组
+			int rr=r-1;
+			for(int i=a-1;i>=a-r;i--)//模拟除法执行的过程
+			{
+				R[rr]=A[i]/B[b-1];
+				int n=b-2;
+				for(int j=i-1;j>i-b;j--)
+				{
+					A[j]=A[j]-B[n--]*R[rr];
+				}
+				rr--;
+			}
+			for(int i=0;i<l;i++)
+			{
+				L[i]=A[i];
+			}
+			for(int i:R)
+			{
+				System.out.print(i+" ");
+			}
+			System.out.println();
+			for(int i:L)
+			{
+				System.out.print(i+" ");
+			}
+			System.out.println();
+		}
+		
+		
+	}
+
+}
+
+/*
+Input:
+ 5 3
+-3 6 -3 4 2
+-1 1 1
+OutPut:
+-3 2 2 
+-6 11 
+*/

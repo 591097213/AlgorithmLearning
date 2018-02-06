@@ -1,0 +1,10 @@
+// 查找单向链表倒数第N个节点(一元前驱递归式)  
+// 充分利用了前驱式递归逆转附加操作的特性，从而到达了从后向前计数的目的  
+const ListNode * FindLastOfNthNode(const ListNode * head, int & Nth)  
+{  
+    if (!head) return NULL; //递归终结情形  
+  
+    const ListNode * node = FindLastOfNthNode(head->m_next, Nth); //前驱式递归  
+  
+    return (--Nth == 0) ? head : node;  
+}  

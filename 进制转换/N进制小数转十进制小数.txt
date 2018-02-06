@@ -1,0 +1,55 @@
+//N进制小数转十进制小数
+//例：转八进制(0.75)[8]= [7*8^(-1) + 5*8^(-2)][10]转化为(0.75)[8] = [(5/8 + 7)/8][10]
+//输入小数几n，n代表几进制
+import java.io.BufferedInputStream;
+import java.util.Scanner;
+
+
+public class Main {
+	
+	public static void main(String[] args)
+	{
+	
+	Scanner sc=new Scanner(new BufferedInputStream(System.in));
+	char[] a_n=new char[999];//存放N进制数
+	char[] a_10=new char[999];//存放十进制
+	String arr;
+	while(sc.hasNext())
+	{
+		arr=sc.next();
+		int N=sc.nextInt();
+		a_n=arr.toCharArray();
+		int n=a_n.length-1;
+		int index=0;
+		for(;n>1;n--)//对N进制数从末尾逐位处理
+		{
+			int num;//对每一位求其数值
+			if(a_n[n]>='A'&&a_n[n]<='Z')
+			{
+				num=a_n[n]-'A'+10;
+			}
+			else
+			{
+				num=a_n[n]-'0';
+			}
+			int j=0;
+			/*************高精度除法*************/
+			for(;j<index||num!=0;j++)//模拟手工计算的过程。例如：5/8=0.625.5。。。（5*10/8=6……2）（2*10/8=2……4）（4*10/8=5……0）
+			{
+				int temp=num*10+(j<index?a_10[j]-'0':0);//对每一位执行高精度除法，将商存入a_10中，对下一位计算时直接在a_10上累加并求商
+				a_10[j]=(char)(temp/N+'0');//商
+				num=temp%N;//余数
+			}
+			index=j;
+			/**********************************/
+		}
+		System.out.println(arr+"["+N+"]=0."+new String(a_10).trim()+"[10]");
+	}
+
+		
+		
+		
+
+	}
+
+}

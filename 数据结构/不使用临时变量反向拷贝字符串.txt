@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+
+
+void ReverselyCopyString(const char * src, char dest[])  
+{     
+    if (!src || !dest) return; //调用参数异常  
+  
+    if (src[0] == '\0') //递归终结情形  
+    {     
+        dest[0] = '\0';  
+        return;  
+    }  
+  
+    ReverselyCopyString(src+1, dest); //前驱式递归  
+  
+    //附加操作  
+    while (*dest != '\0') dest++; //定位至dest字符串末尾  
+  
+    dest[0] = src[0];  
+    dest[1] = '\0';  
+}  
+
+int main()
+{
+	char *src="abcdefg";
+	char dest[10];
+	ReverselyCopyString(src,dest);
+	cout<<dest<<endl;
+	return 0; 
+}

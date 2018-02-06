@@ -1,0 +1,100 @@
+package demo;
+
+import java.util.Scanner;
+
+public class A {
+	
+
+	public static void main(String[] args) {
+		
+		Scanner sc =new Scanner(System.in);
+		int m,n;
+		while(sc.hasNext())
+		{
+			m=sc.nextInt();
+			n=sc.nextInt();
+			double[][] arr=new double[m][n+1];
+			for(int i=0;i<m;i++)
+			{
+				for(int j=0;j<n+1;j++)
+				{
+					arr[i][j]=sc.nextDouble();
+				}
+			}//input
+			
+			
+			for(int i=0;i<m;i++)
+			{
+				double x=1.0/arr[i][i];
+				for(int j=0;j<n+1;j++)
+				{
+					arr[i][j]*=x;
+				}//*1
+				
+				for(int i2=i+1;i2<m;i2++)
+				{
+					x=arr[i2][i];
+					for(int j=0;j<n+1;j++)
+					{
+						arr[i2][j]+=arr[i][j]*x*-1;
+					}
+				}//to 0
+				
+				/*for(double[] k:arr)
+				{
+					for(double j:k)
+					{
+						System.out.printf("%.3f\t",j);
+					}
+					System.out.println();
+				}
+				System.out.println();*/
+			}
+			
+			for(int i=m-1;i>=1;i--)
+			{
+				for(int k=i-1;k>=0;k--)
+				{
+					double x=arr[k][i];
+					for(int j=0;j<n+1;j++)
+					{
+						arr[k][j]+=(arr[i][j]*x*-1);
+					}
+				}//to 0
+				
+				/*for(double[] k:arr)
+				{
+					for(double j:k)
+					{
+						System.out.printf("%.3f\t",j);
+					}
+					System.out.println();
+				}
+				System.out.println();*/
+			}
+			
+			for(double[] i:arr)
+			{
+				for(double j:i)
+				{
+					System.out.printf("%.3f\t",j);
+				}
+				System.out.println();
+			}
+			System.out.println();
+			
+			
+			/*for(int i=0;i<m;i++)
+			{
+				System.out.println(arr[i][n]);
+			}*/
+
+	  /*3 3
+		3 5 -4 0
+		7 2 6 -4
+		4 -1 5 -5*/
+		
+
+	}
+
+	}}

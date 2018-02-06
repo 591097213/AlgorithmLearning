@@ -1,0 +1,47 @@
+package demo;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		
+		int[] arr1={1,2,3,4,5};
+		int[] arr2={1,2,3,4,5};
+		int[] re=new int[10];
+		int flag=0;
+		int i=0;
+		for(;i<arr1.length&&i<arr2.length;i++)
+		{
+			re[i]=(arr1[i]+arr2[i]+flag)%10;
+			flag=(arr1[i]+arr2[i]+flag)/10;
+		}
+		if(i<arr1.length)
+		{
+			for(;i<arr1.length;i++)
+			{
+				re[i]=(arr1[i]+flag)%10;
+				flag=(arr1[i]+flag)/10;
+			}
+		}
+		else if(i<arr2.length)
+		{
+			for(;i<arr2.length;i++)
+			{
+				re[i]=(arr2[i]+flag)%10;
+				flag=(arr2[i]+flag)/10;
+			}
+		}
+		if(flag==1)
+		{
+			re[i++]=1;
+		}
+		while(i-->0)
+		{
+			System.out.print(re[i]);
+		}
+		System.out.println();
+		
+		
+	}
+
+}

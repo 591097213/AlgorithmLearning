@@ -1,0 +1,14 @@
+void inversion()
+{
+	Node *p,*q;
+	Node *temp=first->next;
+	p=first->next;
+	while(p)
+	{
+		q=p;
+		p=p->next;
+		q->next=first->next;
+		first->next=q;
+	}
+	temp->next=NULL;
+}

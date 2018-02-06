@@ -1,0 +1,40 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int n;
+    cin>>n;
+    int a[10001];//储存结果
+    if(n==1) cout<<"1"<<endl;
+    else
+	{
+        int e=0;
+        memset(a,0,sizeof(a));//置零
+        a[e]=1;//置1
+        int c;//
+        for(int i=2;i<=n;i++)
+		{
+            c=0;//进位，可能进多位
+            for(int j=0;j<=e;j++)
+			{
+                int p=a[j]*i+c;
+                c=p/10;
+                a[j]=p%10;
+            }
+            while(c)//多次进位
+			{
+                e++;
+                a[e]=c%10;
+                c/=10;
+            }
+        }
+        for(int k=e;k>=0;k--)
+		{
+            cout<<a[k];
+        }
+    }
+    return 0;
+}
+//存在数组中的大数每位每次与i相乘，注意处理进位，进位可能进多位

@@ -1,0 +1,110 @@
+//问题描述
+//
+//　　给定一个n*n的棋盘，棋盘中有一些位置不能放皇后。现在要向棋盘中放入n个黑皇后和n个白皇后，使任意的两个黑皇后都不在同一行、同一列或同一条对角线上，任意的两个白皇后都不在同一行、同一列或同一条对角线上。问总共有多少种放法？n小于等于8。
+//
+//输入格式
+//
+//　　输入的第一行为一个整数n，表示棋盘的大小。
+// 　　接下来n行，每行n个0或1的整数，如果一个整数为1，表示对应的位置可以放皇后，如果一个整数为0，表示对应的位置不可以放皇后。
+//
+//输出格式
+//
+//　　输出一个整数，表示总共有多少种放法。
+//
+//样例输入
+//
+//4
+// 1 1 1 1
+// 1 1 1 1
+// 1 1 1 1
+// 1 1 1 1
+//
+//样例输出
+//
+//2
+import java.io.BufferedInputStream;
+import java.util.Scanner;
+
+public class Main {
+	
+	static int sum;//记录最终结果
+	static int[] pos;//记录题目所给的初始位置
+	static int[] posTemp;//记录放置一次皇后之后的位置
+	static int[] postemp;//用于第二次调用时顶替多余的参数，无实际意义
+	static int N;//输入
+	static int k;//用于界定矩阵范围
+	
+	
+	static void queen(int row,int pl,int pr,int[] pos,int[] posTemp,int n,int time)//0代表能放置，1代表不能放置
+	{//row：当前列可放置的位置。pl，pr：左右斜线上不可放置的位置。pos，位置数组。n：当前列数，time：放置皇后的次数
+		if(row!=k)//当前列还可放置时
+		{
+			int temp=k&~(row|pr|pl|pos[n]);//取出可放置的所有位，以1表示
+			while(temp!=0)
+			{
+				int p=temp&-temp;//取出最右侧的1
+				posTemp[n]=pos[n];
+				posTemp[n]+=p;//记录下该位置已放置位置
+				temp-=p;//从可放置的位置中减去该位置
+				queen(row+p,(pl+p)<<1,(pr+p)>>1,pos,posTemp,n+1,time);//递归，求下一行
+			}
+		}
+		else//当放置满时
+		{
+			if(time==0)//若为第一次放置皇后
+			{
+				queen(0,0,0,posTemp,postemp,0,time+1);//以posTemp为位置约束，再求一次
+			}
+			else if(time==1)//若为第二次放置皇后
+			{
+				sum++;//记录
+			}
+		}
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		
+		Scanner sc=new Scanner(new BufferedInputStream(System.in));
+		while(sc.hasNext())
+		{
+			N=sc.nextInt();
+			pos=new int[N];
+			posTemp=new int[N];
+			postemp=new int[N];
+			
+			for(int i=0;i<N;i++)
+			{
+				pos[i]=0;//pos置零
+			}
+			
+			//input
+			for(int i=0;i<N;i++)
+			{
+				for(int j=0;j<N;j++)
+				{
+					pos[i]<<=1;
+					pos[i]+=(sc.nextInt()==1?0:1);//转化为0代表可放置，1代表不可放置
+				}
+			}
+			k=1;
+			k<<=N;//确定矩阵范围
+			k-=1;
+			sum=0;
+			
+			queen(0,0,0,pos,posTemp,0,0);
+			
+			System.out.println(sum);
+		}
+		
+		
+		
+		
+		
+
+	}
+
+}

@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNext())
+		{
+			int a1=1,a2=1;
+			int sum=0,tem;
+			long n=sc.nextLong();
+			for(long i=0;i<n;i++)
+			{
+				sum=a1;
+				tem=a2;
+				a2=(a1+a2)%10007;//不精确计算第N项的值而直接计算模除后的结果
+				a1=tem;
+			}
+			System.out.println(sum);
+		}
+		
+		
+		
+		
+		
+	}
+
+}
