@@ -1,2 +1,2 @@
 # AlgorithmLearning
-A Repo for My Algorithm Learning
+算法学习的一点东西。长期不定期很少更新。
