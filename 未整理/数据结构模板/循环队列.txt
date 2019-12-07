@@ -1,0 +1,75 @@
+#include <iostream>        //引用输入输出流
+using namespace std;
+const int QueueSize=100;  //定义存储队列元素的数组的最大长度
+class CirQueue
+{
+public:
+    CirQueue( )        //构造函数，置空队
+	{
+		front=rear=0;
+	}
+    ~ CirQueue( ) {}              //析构函数
+    void EnQueue(int x)           //将元素x入队
+	{
+		if ((rear+1) % QueueSize ==front)
+		{
+			cout<<"data error"<<endl;
+			return;
+		}
+		rear=(rear+1) % QueueSize;   //队尾指针在循环意义下加1
+		data[rear]=x;                //在队尾处插入元素
+	}
+    void DeQueue( )                //将队头元素出队
+	{
+		if (rear==front)
+		{
+			cout<<"data error"<<endl;
+			return;
+		} 
+		front=(front+1) % QueueSize;    //队头指针在循环意义下加1
+		cout<<data[front]<<endl;             //读取并返回出队前的队头元素，注意队头指针
+	}
+    void GetQueue( )               //取队头元素（并不删除）
+	{   
+		int i;
+		if (rear==front)
+		{
+			cout<<"data error"<<endl;
+			return;
+		}
+		i=(front+1) % QueueSize;  //注意不要给队头指针赋值
+		cout<<data[i]<<endl;
+	}
+    bool Empty( )               //判断队列是否为空
+	{
+		if (front==rear) 
+			return 1; 
+		else 
+			return 0;
+	}
+private:	
+    int data[QueueSize];           //存放队列元素的数组
+    int front, rear;    //队头和队尾指针，分别指向队头元素的前一个位置和队尾元素的位置
+};
+void main()
+{
+    CirQueue  a;           //创建模版类的实例 	
+	if(a.Empty( )){		
+		cout<<"循环队列空,对10执行入队操作:"<<endl;
+		a.EnQueue(10);                      //入队操作		
+		cout<<"读取队头元素:"<<endl;
+		a.GetQueue( );           //读队头元素		
+		cout<<"对15执行入队操作:"<<endl;
+		a.EnQueue(15);
+		cout<<"读取队头元素:"<<endl;
+		a.GetQueue( );		
+		cout<<"执行出队操作，出队元素为："<<endl;     //出队操作
+		a.DeQueue( );
+		cout<<"读取队头元素:"<<endl;
+		a.GetQueue( );
+	}
+	else{		
+		cout<<"循环队列不空"<<endl;
+	}
+	
+}

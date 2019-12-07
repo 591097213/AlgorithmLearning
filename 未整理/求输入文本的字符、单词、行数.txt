@@ -1,0 +1,21 @@
+#include<stdio.h>// ‰»Î°Æ@°Ø ±Ω· ¯
+void main()
+{
+	int line,word,t,ch;
+	char a;
+	ch=word=t=0;line=1;
+	while((a=getchar())!='@')
+	{
+		ch++;
+		if(a=='\n')
+			line++;
+		if(a==' '||a=='\n'||a=='\t')
+			t=0;
+		else if(t==0)
+		{
+			word++;
+			t=1;
+		}
+	}
+	printf("line=%d	word=%d	character=%d\n",line,word,ch);
+}

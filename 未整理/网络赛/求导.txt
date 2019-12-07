@@ -1,0 +1,30 @@
+#include<stdio.h>
+void main()
+{
+	int a[999],t,k,n,j,i;
+	while(scanf("%d%d",&n,&k)!=EOF)
+	{
+		for(i=k;i>=0;i--)
+		{
+			scanf("%d",&a[i]);
+		}
+		for(i=0;i<n;i++)
+		{
+			for(j=k;j>=0;j--)
+			{
+			a[j]=(j-i)*a[j];
+			}
+		}
+		t=k;
+		for(i=k;i>=0;i--)
+		{
+			printf("%d",a[i]);
+			if(t>0)
+			{
+				printf(" ");
+				t--;
+			}
+		}
+		printf("\n");
+	}
+}

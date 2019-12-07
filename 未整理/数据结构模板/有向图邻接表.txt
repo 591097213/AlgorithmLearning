@@ -1,0 +1,112 @@
+#include <iostream>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+const int MAX=20; 
+int visited[MAX];
+
+
+struct ArcNode      //定义边表结点
+{
+	int adjvex;     //邻接点域
+	ArcNode *next;
+};
+
+
+struct VertexNode   //定义顶点表结点
+{
+	char vertex;
+	ArcNode *firstedge;
+};
+
+
+class ALGraph
+{
+private:
+	VertexNode adjlist[MAX];       //存放顶点表的数组
+	int vertexNum, arcNum;             //图的顶点数和边数
+public:
+	ALGraph(char a[ ], int n, int e)
+	{
+		ArcNode *s;
+		int i, j, k;
+		vertexNum = n; 
+		arcNum = e;
+		for (i = 0; i < vertexNum; i++)      //输入顶点信息，初始化顶点表
+		{ 
+			adjlist[i].vertex = a[i];
+			adjlist[i].firstedge = NULL;      
+		}
+		for (k = 0; k < arcNum; k++)         //依次输入每一条边
+		{ 
+			cin >> i >> j; 
+			s = new ArcNode; 
+			s->adjvex = j;
+			s->next = adjlist[i].firstedge;  //将结点s插入到第i个边表的表头
+			adjlist[i].firstedge = s;
+		}
+	}
+	~ALGraph( )
+	{
+		ArcNode *p;
+		for(int i=0; i<vertexNum; i++)
+		{
+			p=adjlist[i].firstedge;
+			while(p!=NULL)                   //循环删除
+			{
+				adjlist[i].firstedge=p->next;
+				delete p;                    //释放结点空间
+				p=adjlist[i].firstedge;
+			}
+		}
+	}
+	void DFSTraverse(int v)             //深度优先遍历图
+	{
+		ArcNode *p;
+		int j;
+		cout<<adjlist[v].vertex<<' '; 
+		visited[v] = 1;
+		p = adjlist[v].firstedge;       //工作指针p指向顶点v的边表
+		while (p != NULL)               //依次搜索顶点v的邻接点j
+		{
+			j = p->adjvex;
+			if (visited[j] == 0) 
+				DFSTraverse(j);
+			p = p->next;           
+		}
+	}
+	void BFSTraverse(int v)             //广度优先遍历图
+	{
+		int front =-1, rear = -1; 
+		int Q[MAX];
+		ArcNode *p;
+		cout<<adjlist[v].vertex<<' '; 
+		visited[v] = 1; 
+		Q[++rear] = v;                  //被访问顶点入队
+		while (front != rear)           //当队列非空时
+		{
+			v = Q[++front];
+			p = adjlist[v].firstedge;   //工作指针p指向顶点v的边表
+			while (p != NULL) 
+			{
+				int j = p->adjvex;
+				if (visited[j]==0) 
+				{
+					cout<<adjlist[j].vertex<<' '; 
+					visited[j]=1;
+					Q[++rear]=j;
+				}
+				p=p->next;
+			}
+		}
+	}
+};
+
+
+int main()
+{
+	freopen("1.cpp","r",stdin);
+
+
+	return 0;
+}

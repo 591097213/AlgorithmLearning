@@ -1,0 +1,111 @@
+#include<iostream>
+using namespace std;
+const int MaxSize=100;
+struct BiNode
+{
+	char data;
+	BiNode *lchild,*rchild;
+}; 
+class BiTree
+{
+public:
+	BiTree()
+	{
+		root=Creat();
+	}
+	~BiTree()
+	{
+		Release(root);
+	}
+	void PreOrder(BiNode *bt)
+	{
+		if(bt==NULL)  return;
+		else 
+		{		
+			cout<<bt->data<<" ";
+			PreOrder(bt->lchild);
+			PreOrder(bt->rchild);
+		}
+	}
+	void InOrder(BiNode *bt)
+	{
+		if (bt==NULL)  return;	          
+		else 
+		{	
+			InOrder(bt->lchild);
+			cout<<bt->data<<" "; 
+			InOrder(bt->rchild); 
+		}
+	}
+	void PostOrder(BiNode *bt)
+	{
+		if (bt==NULL)  return; 
+		else 
+		{	
+			PostOrder(bt->lchild); 
+			PostOrder(bt->rchild); 
+			cout<<bt->data<<" "; 
+		}
+	}
+	void LeverOrder()
+	{		
+		int front=-1, rear=-1;
+		BiNode *Q[MaxSize], *q;
+		if (root==NULL) return;
+		else 
+		{
+			Q[rear++]=root;
+			while (front!=rear)
+			{
+				q=Q[front++];
+				cout<<q->data<<" "; 		
+				if (q->lchild!=NULL)  Q[rear++]=q->lchild;		
+				if (q->rchild!=NULL)  Q[rear++]=q->rchild;
+			}
+		}
+	}
+	BiNode *root;
+private:
+	BiNode *Creat()
+	{
+		BiNode *bt;
+		char ch;
+		cin>>ch;
+		if (ch=='#') return NULL;
+		else{ 
+			bt = new BiNode; 
+			bt->data=ch;
+			bt->lchild = Creat();
+			bt->rchild = Creat(); 
+		} 
+		return bt;		
+	} 
+	void Release(BiNode *bt)
+	{
+		if (bt != NULL)
+		{                  
+			Release(bt->lchild); 
+			Release(bt->rchild); 
+			delete bt;
+		}  
+	}
+	
+};
+int main()
+{	
+	BiTree T;
+	cout<<"------前序遍历------ "<<endl;
+	T.PreOrder(T.root);
+	cout<<endl;
+	cout<<"------中序遍历------ "<<endl;
+	T.InOrder(T.root);
+	cout<<endl;
+	cout<<"------后序遍历------ "<<endl;
+	T.PostOrder(T.root);
+	cout<<endl;
+	cout<<"------层序遍历------ "<<endl;
+	T.LeverOrder();
+	cout<<endl;
+	cout<<endl;
+	return 0;
+}

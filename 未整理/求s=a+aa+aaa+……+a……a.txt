@@ -1,0 +1,15 @@
+#include<stdio.h>//输入a，n，输出s=a+aa+aaa+……+a……a，最后一个数字有n个a
+void main()
+{
+	int a,s,i,n,k;
+	while(~scanf("%d%d",&a,&n))
+	{
+		s=0;k=a;
+		for(i=0;i<n;i++)
+		{
+			s+=a;
+			a=a*10+k;
+		}
+		printf("%d\n",s);
+	}
+}

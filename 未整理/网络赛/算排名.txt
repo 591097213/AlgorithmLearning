@@ -1,0 +1,38 @@
+#include<stdio.h>
+void main()
+{
+	unsigned long n,m,i,j;
+	double mi[250000],ni[20000],t;
+	while(scanf("%d%d",&n,&m)!=EOF)
+	{
+		for(i=0;i<n;i++)
+		{
+			scanf("%lf",&ni[i]);
+		}
+		for(i=0;i<m;i++)
+		{
+			scanf("%lf",&mi[i]);
+		}//input
+		for(i=0;i<n-1;i++)
+		{
+			for(j=0;j<n-i-1;j++)
+			{
+				if(ni[j]<ni[j+1])
+				{
+					t=ni[j];
+					ni[j]=ni[j+1];
+					ni[j+1]=t;
+				}
+			}
+		}//ni从大到小
+		for(i=0;i<m;i++)
+		{
+			for(j=n-1;j>=0;j--)
+			{
+				if(ni[j]>mi[i]||ni[j]==mi[i])
+					break;
+			}
+			printf("%d\n",j+1);
+		}
+	}
+}

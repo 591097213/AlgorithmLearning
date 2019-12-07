@@ -1,0 +1,27 @@
+#include<stdio.h>
+void main()
+{
+	int k,i,j,m,n,a[100];
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&m);
+		for(j=0;j<m;j++)
+		{
+			scanf("%d",&a[j]);
+		}
+		k=0;
+		for(j=0;j<m;j++)
+		{
+			if(a[j]<0)
+			{
+				k=1;
+				break;
+			}
+		}
+		if(k==1)
+		{printf("Case %d:%d\n",i+1,a[j]);}
+		else
+		{printf("Case %d:Not found!\n",i+1);}
+	}
+}

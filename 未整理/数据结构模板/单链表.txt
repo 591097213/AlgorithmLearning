@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+struct Node
+{
+	int data;
+	Node *next;  
+};
+class LinkList
+{
+public:
+    LinkList(int a[], int n)
+	{
+		first=new Node;
+		Node *r;
+		r=first;
+		for(int i=0;i<n;i++)
+		{
+			Node *s;
+			s=new Node; s->data=a[i];  //为每个数组元素建立一个结点
+			r->next=s;       //插入到尾结点之后
+			r=s;
+		}
+		r->next=NULL;
+		//以下为头插法
+		/*
+		first=new Node;
+		first->next=NULL;  //初始化一个空链表
+		for (int i=0; i<n; i++)
+		{
+		Node *s;
+		s=new Node; s->data=a[i];  //为每个数组元素建立一个结点
+		s->next=first->next;       //插入到头结点之后
+		first->next=s;
+	}*/
+	}
+    ~LinkList( )
+	{
+		Node *p, *q;
+		p=first;     //工作指针p初始化
+		while (p!=NULL)   //释放单链表的每一个结点的存储空间
+		{
+			q=p;    //暂存被释放结点
+			p=p->next;  //工作指针p指向被释放结点的下一个结点，使单链表不断开
+			delete q;    
+		}
+	}
+    void Insert(int i, int x)//在单链表中第i个位置插入元素值为x的结点
+	{ 
+		Node *p;
+		int j;
+		p=first ; j=0;    //工作指针p初始化
+		while (p!=NULL && j<i-1)
+		{
+			p=p->next;   //工作指针p后移
+			j++;
+		}
+		if (p==NULL)
+		{
+			cout<<"data error"<<endl;
+			return;
+		}
+		else 
+		{ 
+			Node *s;
+			s=new Node; 
+			s->data=x;  //向内存申请一个结点s，其数据域为x
+			s->next=p->next;       //将结点s插入到结点p之后
+			p->next=s;
+		}
+	}
+    void Delete(int i)//在单链表中删除第i个结点
+	{ 
+		Node *p;
+		int j;
+		p=first ; j=0;  //工作指针p初始化
+		while (p!=NULL && j<i-1)  //查找第i-1个结点
+		{
+			p=p->next;
+			j++;
+		}
+		if (p==NULL || p->next==NULL)//结点p不存在或结点p的后继结点不存在
+		{
+			cout<<"data error"<<endl;
+			return;
+		}
+		else 
+		{
+			Node *q; int x;
+			q=p->next; x=q->data;  //暂存被删结点
+			p->next=q->next;  //摘链
+			delete q; 
+		}
+	}
+    int Locate(int x)//求单链表中值为x的元素序号
+	{
+		Node *p; int j;
+		p=first->next; j=1;
+		while (p!=NULL && p->data!=x)
+		{
+			p=p->next;
+			j++;
+		}
+		if (p!=NULL) return j;
+		else return 0;
+	}
+    void PrintList()//遍历单链表，按序号依次输出各元素
+	{
+		Node *p;
+		p=first->next;
+		while (p!=NULL)
+		{
+			cout<<p->data<<"  ";
+			p=p->next;
+		}
+		cout<<endl;
+	}
+private:
+    Node *first;  //单链表的头指针
+};
+void main( )
+{
+	int r[5]={1, 2, 3, 4, 5};
+	LinkList L(r, 5);
+	cout<<"执行插入操作前数据为："<<endl;
+	L.PrintList( );                  //显示链表中所有元素
+	L.Insert(2, 3);
+	cout<<"执行插入操作后数据为："<<endl;
+	L.PrintList( );                  //显示链表中所有元素
+	cout<<"值为5的元素位置为:";
+	cout<<L.Locate(5)<<endl;        //查找元素5，并返回在单链表中位置
+	cout<<"执行删除操作前数据为："<<endl;     
+	L.PrintList( );                  //显示链表中所有元素
+	L.Delete(1);                    //删除元素4
+	cout<<"执行删除操作后数据为："<<endl;     
+	L.PrintList( );                  //显示链表中所有元素
+}
